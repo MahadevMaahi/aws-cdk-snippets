@@ -14,7 +14,10 @@ class AwsCdkSnippetsStack(core.Stack):
         # The code that defines your stack goes here
         _s3.Bucket(
             self,
-            "myBucketId"
+            "myBucketId",
+            bucket_name="aws-cdk-snippet-stack-s3-bucket-name",
+            versioned=True,
+            encryption=_s3.BucketEncryption.KMS_MANAGED
         )
         # example resource
         # queue = sqs.Queue(
