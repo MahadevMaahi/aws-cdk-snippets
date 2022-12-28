@@ -16,8 +16,27 @@ class AwsCdkSnippetsStack(core.Stack):
             self,
             "myBucketId",
             bucket_name="aws-cdk-snippet-stack-s3-bucket-name",
-            versioned=True,
-            encryption=_s3.BucketEncryption.KMS_MANAGED
+            versioned=False,
+            encryption=_s3.BucketEncryption.S3_MANAGED,
+            block_public_access=_s3.BlockPublicAccess.BLOCK_ALL
+        )
+
+        myBucket = _s3.Bucket(
+            self,
+            "myBucketObjectId"
+        )
+
+        snsTopicName = "mySNSTopic"
+
+        if not core.Token.is_unresolved(snsTopicName) and len(snsTopicName) > 10 :
+            raise ValueError("Length of the Topic Name can be atmost 10")
+
+        output_1 = core.CfnOutput(
+            self,
+            "myBucketOutput1",
+            value = myBucket.bucket_name,
+            description = f"My First CDK Bucket",
+            export_name = "myBucketOutput1"
         )
         # example resource
         # queue = sqs.Queue(
