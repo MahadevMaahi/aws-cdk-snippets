@@ -3,11 +3,24 @@ import os
 
 from aws_cdk import core
 
-from aws_cdk_snippets.aws_cdk_snippets_stack import AwsCdkSnippetsStack
+from aws_cdk_snippets.aws_cdk_snippets_stack import MyArtifactBucketStack
 
 
 app = core.App()
-AwsCdkSnippetsStack(app, "AwsCdkSnippetsStack",
+
+ENV_US = core.Environment(
+    account=app.node.try_get_context('dev')['account'],
+    region=app.node.try_get_context('dev')['region']
+    )
+ENV_EU = core.Environment(
+    account=app.node.try_get_context('dev')['account'],
+    region=app.node.try_get_context('dev')['region']
+    )
+
+MyArtifactBucketStack(app, "MyDevStack", env = ENV_US)
+MyArtifactBucketStack(app, "MyProdStack", is_prod=True, env = ENV_EU)
+
+# AwsCdkSnippetsStack(app, "MyDevStack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
@@ -23,6 +36,6 @@ AwsCdkSnippetsStack(app, "AwsCdkSnippetsStack",
     #env=cdk.Environment(account='123456789012', region='us-east-1'),
 
     # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    )
+    # )
 
 app.synth()

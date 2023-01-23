@@ -1,5 +1,6 @@
 {
   "app": "python app.py",
+  "versionReporting": false,
   "watch": {
     "include": [
       "**"
@@ -33,6 +34,17 @@
     "@aws-cdk/core:enablePartitionLiterals": true,
     "@aws-cdk/aws-events:eventsTargetQueueSameAccount": true,
     "@aws-cdk/aws-iam:standardizedServicePrincipals": true,
-    "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": true
+    "@aws-cdk/aws-ecs:disableExplicitDeploymentControllerForCircuitBreaker": true,
+    "dev":{
+      "region": "us-east-1",
+      "account": "123456789012"
+    },
+    "prod": {
+      "region": "eu-west-1",
+      "account": "123456789012",
+      "encryption": true,
+      "kms_arn": "arn:aws:kms:eu-west-1:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab",
+      "vpc_cidr": "10.0.0.0"
+    }
   }
 }
